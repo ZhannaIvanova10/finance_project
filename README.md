@@ -12,7 +12,7 @@
 from file_reader import read_csv_file, read_excel_file
 
 # Чтение из CSV
-transactions_csv = read_csv_file('transactions.csv')
+transactions_csv = read_csv_file('data/transactions.csv')
 
 # Чтение из Excel
 transactions_excel = read_excel_file('transactions.xlsx')
@@ -35,3 +35,11 @@ transactions_excel = read_excel_file('transactions.xlsx')
 3. Поддержана типизация кода (mypy)
 
 4. Соблюдены требования PEP 8
+
+
+
+## Поддержка CSV и Excel
+
+Теперь проект может читать транзакции из:
+- CSV-файлов (`read_csv_transactions()`)
+- Excel-файлов (`read_excel_transactions()`)
