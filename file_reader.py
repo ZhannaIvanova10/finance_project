@@ -1,5 +1,6 @@
 import csv
-from typing import List, Dict, Any, Hashable
+from typing import Any, Dict, Hashable, List
+
 import pandas as pd
 
 

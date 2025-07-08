@@ -1,6 +1,9 @@
 import unittest
-from unittest.mock import patch, mock_open
+from typing import Any, Dict, List
+from unittest.mock import mock_open, patch
+
 import pandas as pd
+
 from file_reader import read_csv_file, read_excel_file
 
 
@@ -8,7 +11,7 @@ class TestFileReader(unittest.TestCase):
     @patch('builtins.open',
            mock_open(read_data='id,amount,date\n1,100,2023-01-01\n2,200,2023-01-02'))
     @patch('csv.DictReader')
-    def test_read_csv_file(self, mock_dict_reader):
+    def test_read_csv_file(self, mock_dict_reader: Any) -> None:
         # Настраиваем mock
         mock_dict_reader.return_value = [
             {'id': '1', 'amount': '100', 'date': '2023-01-01'},
@@ -16,7 +19,7 @@ class TestFileReader(unittest.TestCase):
         ]
 
         # Тестируем
-        result = read_csv_file('dummy_path.csv')
+        result: List[Dict[str, Any]] = read_csv_file('dummy_path.csv')
 
         # Проверяем
         self.assertEqual(len(result), 2)
@@ -24,7 +27,7 @@ class TestFileReader(unittest.TestCase):
         self.assertEqual(result[1]['amount'], '200')
 
     @patch('pandas.read_excel')
-    def test_read_excel_file(self, mock_read_excel):
+    def test_read_excel_file(self, mock_read_excel: Any) -> None:
         # Настраиваем mock
         mock_data = pd.DataFrame({
             'id': [1, 2],
@@ -34,7 +37,7 @@ class TestFileReader(unittest.TestCase):
         mock_read_excel.return_value = mock_data
 
         # Тестируем
-        result = read_excel_file('dummy_path.xlsx')
+        result: List[Dict[Any, Any]] = read_excel_file('dummy_path.xlsx')
 
         # Проверяем
         self.assertEqual(len(result), 2)
