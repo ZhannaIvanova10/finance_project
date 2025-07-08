@@ -1,25 +1,41 @@
 [project]
 name = "finance-project"
-version = "0.1.0"
-description = "Library for reading financial transactions from various file formats"
+version = "1.0.0"
+description = "Библиотека для работы с финансовыми транзакциями"
 authors = [
     {name = "Жанна Иванова", email = "janett_86@mail.ru"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+
 dependencies = [
-    "pandas>=2.3.0",
-    "openpyxl>=3.1.0",
-    "pytest>=8.0.0"
+    "pandas>=2.0.0",
+    "openpyxl>=3.0.0"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "flake8>=6.0.0"
+]
+lint = [
+    "black>=23.12.0",
+    "isort>=5.13.0",
+    "mypy>=1.8.0"
 ]
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.mypy]
-python_version = "3.13"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-ignore_missing_imports = false
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.poetry]
+packages = [
+    {include = "file_reader.py"},
+    {include = "test_file_reader.py"}
+]
