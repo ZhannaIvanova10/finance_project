@@ -1,1 +1,26 @@
+cat > .gitignore << 'EOF'
 __pycache__/
+*.py[cod]
+*.pyc
+*.log
+*.sqlite3
+.venv/
+.env/
+.DS_Store
+.idea/
+*.xlsx
+*.csv
+.coverage
+htmlcov/
+
+# Исключаем тестовые данные
+/test_data/
+/data/
+
+# Исключаем файлы poetry
+poetry.lock
+
+# Исключаем примеры и скрипты (если нужно)
+/examples/
+/scripts/
+EOF
