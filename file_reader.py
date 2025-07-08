@@ -1,5 +1,5 @@
 import csv
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Hashable
 import pandas as pd
 
 
@@ -23,7 +23,7 @@ def read_csv_file(file_path: str) -> List[Dict[str, Any]]:
     return transactions
 
 
-def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
+def read_excel_file(file_path: str) -> List[Dict[Hashable, Any]]:
     """
     Чтение финансовых операций из Excel файла.
 

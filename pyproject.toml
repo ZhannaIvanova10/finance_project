@@ -1,16 +1,25 @@
 [project]
 name = "finance-project"
 version = "0.1.0"
-description = ""
+description = "Library for reading financial transactions from various file formats"
 authors = [
-    {name = "Жанна Иванова",email = "janett_86@mail.ru"}
+    {name = "Жанна Иванова", email = "janett_86@mail.ru"}
 ]
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "pandas>=2.3.0",
+    "openpyxl>=3.1.0",
+    "pytest>=8.0.0"
 ]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = false
