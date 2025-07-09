@@ -26,3 +26,12 @@ def read_excel_file(file_path: Path | str) -> Optional[pd.DataFrame]:
     except Exception as e:
         print(f"Error reading Excel file: {e}")
         return None
+
+
+def read_csv_file(file_path: Path | str) -> Optional[List[dict]]:
+    try:
+        df = pd.read_csv(file_path)
+        return df.to_dict('records')  # Преобразует DataFrame в список словарей
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
