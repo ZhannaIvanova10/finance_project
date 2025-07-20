@@ -1,11 +1,10 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, cast
 import csv
 import pandas as pd
 
 
 def read_csv_file(file_path: str) -> List[Dict[str, Any]]:
-    """
-    Считывает финансовые операции из CSV-файла.
+    """Считывает финансовые операции из CSV-файла.
 
     Args:
         file_path: Путь к CSV-файлу
@@ -31,8 +30,7 @@ def read_csv_file(file_path: str) -> List[Dict[str, Any]]:
 
 
 def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
-    """
-    Считывает финансовые операции из Excel-файла.
+    """Считывает финансовые операции из Excel-файла.
 
     Args:
         file_path: Путь к Excel-файлу
@@ -46,7 +44,7 @@ def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
     """
     try:
         df = pd.read_excel(file_path, engine='openpyxl')
-        return df.to_dict('records')
+        return cast(List[Dict[str, Any]], df.to_dict('records'))
     except FileNotFoundError as e:
         raise FileNotFoundError(f"Файл не найден: {file_path}") from e
     except Exception as e:
