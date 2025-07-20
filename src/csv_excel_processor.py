@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, cast
+from typing import List, Dict, Any
 import csv
 import pandas as pd
 
@@ -44,7 +44,9 @@ def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
     """
     try:
         df = pd.read_excel(file_path, engine='openpyxl')
-        return cast(List[Dict[str, Any]], df.to_dict('records'))
+        # Явное преобразование ключей в строки
+        return [{str(k): v for k, v in row.items()}
+                for row in df.to_dict('records')]
     except FileNotFoundError as e:
         raise FileNotFoundError(f"Файл не найден: {file_path}") from e
     except Exception as e:
