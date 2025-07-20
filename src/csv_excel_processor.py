@@ -1,54 +1,54 @@
 import csv
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 import pandas as pd
 
 
 def read_csv_file(file_path: str) -> List[Dict[str, Any]]:
-    """
-    Читает финансовые операции из CSV файла.
+    """Считывает финансовые операции из CSV-файла.
 
     Args:
-        file_path: Путь к CSV файлу
+        file_path: Путь к CSV-файлу
 
     Returns:
-        Список словарей с транзакциями
+        Список транзакций в виде словарей
 
     Raises:
-        FileNotFoundError: Если файл не найден
+        FileNotFoundError: Если файл не существует
         csv.Error: При ошибках чтения CSV
     """
-    transactions = []
     try:
-        with open(file_path, newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
+        transactions = []
+        with open(file_path, mode='r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
             for row in reader:
                 transactions.append(dict(row))
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Файл {file_path} не найден")
+        return transactions
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Файл не найден: {file_path}") from e
     except csv.Error as e:
-        raise csv.Error(f"Ошибка чтения CSV: {str(e)}")
-
-    return transactions
+        raise csv.Error(f"Ошибка чтения CSV: {str(e)}") from e
 
 
 def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
-    """
-    Читает финансовые операции из Excel файла.
+    """Считывает финансовые операции из Excel-файла.
 
     Args:
-        file_path: Путь к Excel файлу
+        file_path: Путь к Excel-файлу
 
     Returns:
-        Список словарей с транзакциями
+        Список транзакций в виде словарей
 
     Raises:
-        FileNotFoundError: Если файл не найден
-        ValueError: При ошибках чтения Excel
+        ValueError: При ошибках чтения файла
+        FileNotFoundError: Если файл не существует
     """
     try:
         df = pd.read_excel(file_path, engine='openpyxl')
-        return df.to_dict('records')
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Файл {file_path} не найден")
+        # Явное преобразование ключей в строки
+        return [{str(k): v for k, v in row.items()}
+                for row in df.to_dict('records')]
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Файл не найден: {file_path}") from e
     except Exception as e:
-        raise ValueError(f"Ошибка чтения Excel: {str(e)}")
+        raise ValueError(f"Ошибка чтения Excel файла: {str(e)}") from e
