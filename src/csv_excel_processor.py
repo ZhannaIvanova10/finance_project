@@ -1,6 +1,5 @@
+from typing import List, Dict, Any
 import csv
-from typing import Any, Dict, List
-
 import pandas as pd
 
 
@@ -13,13 +12,22 @@ def read_csv_file(file_path: str) -> List[Dict[str, Any]]:
 
     Returns:
         Список транзакций в виде словарей
+
+    Raises:
+        FileNotFoundError: Если файл не существует
+        csv.Error: При ошибках чтения CSV
     """
-    transactions = []
-    with open(file_path, mode='r', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            transactions.append(dict(row))
-    return transactions
+    try:
+        transactions = []
+        with open(file_path, mode='r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                transactions.append(dict(row))
+        return transactions
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Файл не найден: {file_path}") from e
+    except csv.Error as e:
+        raise csv.Error(f"Ошибка чтения CSV: {str(e)}") from e
 
 
 def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
@@ -31,6 +39,15 @@ def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
 
     Returns:
         Список транзакций в виде словарей
+
+    Raises:
+        ValueError: При ошибках чтения файла
+        FileNotFoundError: Если файл не существует
     """
-    df = pd.read_excel(file_path, engine='openpyxl')
-    return df.to_dict('records')
+    try:
+        df = pd.read_excel(file_path, engine='openpyxl')
+        return df.to_dict('records')
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Файл не найден: {file_path}") from e
+    except Exception as e:
+        raise ValueError(f"Ошибка чтения Excel файла: {str(e)}") from e
