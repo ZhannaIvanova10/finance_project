@@ -1,45 +1,57 @@
+
 # Финансовый проект
 
-## Новый функционал
+## Описание проекта
+Библиотека для работы с финансовыми транзакциями. Поддерживает чтение данных из:
+- JSON
+- CSV (функция `read_csv_file()`)
+- Excel (функция `read_excel_file()`)
 
-Добавлена поддержка чтения транзакций из:
-- CSV файлов (функция `read_csv_file()`)
-- Excel файлов (функция `read_excel_file()`)
+## Установка
 
-### Использование
+```bash
+# Установка зависимостей
+pip install -r requirements.txt
+
+# Или через poetry
+poetry install
+```
+
+## Использование
 
 ```python
 from file_reader import read_csv_file, read_excel_file
 
-# Чтение из CSV
-transactions_csv = read_csv_file('data/transactions.csv')
+# Чтение CSV файла
+transactions = read_csv_file('data/transactions.csv')
 
-# Чтение из Excel
-transactions_excel = read_excel_file('transactions.xlsx')
+# Чтение Excel файла
+transactions = read_excel_file('data/transactions.xlsx')
 ```
 
-### Зависимости
+## Тестирование
 
-Для работы требуется:
-- pandas
-- openpyxl
+```bash
+# Запуск тестов с покрытием
+pytest --cov=file_reader --cov-report=term-missing
 
-### Критерии оценки
+# Проверка стиля кода
+flake8 file_reader.py
+```
 
-1. Реализованы функции для чтения:
-   - CSV файлов (read_csv_file())
-   - Excel файлов (read_excel_file())
+## Обработка ошибок
 
-2. Написаны тесты с использованием Mock
+Функции возвращают пустой список `[]` в следующих случаях:
+- Файл не существует или недоступен
+- Файл пуст или не содержит данных
+- Неправильный формат файла
+- Ошибки парсинга данных
+- Любые другие ошибки чтения
 
-3. Поддержана типизация кода (mypy)
+Все ошибки логируются в стандартный вывод.
 
-4. Соблюдены требования PEP 8
+## Лицензия
 
+MIT
 
-
-## Поддержка CSV и Excel
-
-Теперь проект может читать транзакции из:
-- CSV-файлов (`read_csv_transactions()`)
-- Excel-файлов (`read_excel_transactions()`)
+Последнее обновление: 09.07.2025
